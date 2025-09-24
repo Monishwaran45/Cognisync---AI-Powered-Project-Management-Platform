@@ -89,16 +89,14 @@ cognisync-backend/
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
-\`\`\`bash
+bash
 npm run build
 # Deploy to Vercel
-\`\`\`
 
 ### Other Platforms
-\`\`\`bash
+bash
 npm run build
 npm start
-\`\`\`
 
 ## 📊 Analytics Dashboard
 

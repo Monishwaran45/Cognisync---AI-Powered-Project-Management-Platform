@@ -146,17 +146,3 @@ Submit a pull request
 📞 Support
 For support and questions, please open an issue in the repository.
 
-vbnet
-Copy code
-
-✅ This is now **GitHub-ready** with proper markdown formatting, code blocks, and section dividers.  
-
-Do you want me to also design a **short tagline + badges section** (like "Built with Next.js | Gemini AI | Tailwind") at the very top for extra polish?
-
-
-
-
-
-
-
-Ask ChatGPT

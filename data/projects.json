@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "E-commerce Platform Redesign",
+    "description": "Complete overhaul of the existing e-commerce platform with modern UI/UX and improved performance",
+    "priority": "high",
+    "teamSize": 8,
+    "deadline": "2024-02-15",
+    "status": "active",
+    "progress": 35,
+    "tasksCount": 12,
+    "aiAlerts": 2,
+    "createdAt": "2025-09-24T17:44:23.437Z"
+  }
+]

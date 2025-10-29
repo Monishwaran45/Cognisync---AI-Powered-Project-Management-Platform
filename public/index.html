@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>CogniSync - Collaborative AI Agents</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    /* Navigation Bar */
+    nav {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 20px 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+        z-index: 10;
+        background: transparent;
+        backdrop-filter: blur(5px);
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-scrolled {
+        background: rgba(10, 25, 47, 0.85);
+    }
+
+    .logo {
+        font-size: 1.5em;
+        font-weight: 700;
+        color: #ccd6f6;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav ul li a {
+        color: #ccd6f6;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+        color: #4fc3f7;
+    }
+
+    .btn-nav {
+        background: #3949ab;
+        padding: 8px 18px;
+        border-radius: 8px;
+    }
+
+    .btn-nav:hover {
+        background: #5c6bc0;
+        color: #fff !important;
+    }
+</style>
+<style>
+    body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: #000000; /* Fallback */
+    background-image: linear-gradient(to bottom, #1e3a8a, #000000);
+    color: #fff;
+    font-family: 'Poppins', 'Segoe UI', 'Arial', sans-serif;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    padding-top: 100px; /* Make space for nav */
+}
+
+.hero h1 {
+    font-size: 3.5em;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #ccd6f6;
+}
+
+.hero p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #8892b0;
+    max-width: 700px;
+    margin-bottom: 30px;
+}
+
+/* Sections */
+.agents-intro, .demo, .contact, .about {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 20px 25px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.agents-intro:hover, .demo:hover, .contact:hover, .about:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.demo p, .contact p {
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #8892b0;
+}
+
+.agents-intro h2, .demo h2, .contact h2, .about h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #ccd6f6;
+    text-align: center;
+}
+
+.about {
+    text-align: center;
+}
+.about p {
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.1em;
+}
+
+/* Agent Cards */
+.agent-cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.agent-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    padding: 20px;
+    flex-basis: 200px;
+    flex-grow: 1;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.agent-card:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.agent-card h3 {
+    color: #4fc3f7;
+    margin-top: 0;
+}
+
+.agent-card p {
+    color: #8892b0;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+
+/* Interactive Dashboard */
+.simulation-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    text-align: left;
+}
+
+#simulation-log {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 15px;
+    height: 300px;
+    overflow-y: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+#simulation-log .log-entry {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+#timeline-container h3 {
+    text-align: center;
+    color: #ccd6f6;
+    margin-top: 0;
+}
+
+#timeline-chart {
+    display: grid;
+    grid-template-columns: repeat(30, 1fr); /* 30 days */
+    gap: 2px;
+    background: rgba(0,0,0,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    min-height: 280px;
+}
+
+.timeline-task {
+    background: #3949ab;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    grid-row: auto / span 1;
+    transition: all 0.3s ease, opacity 0.4s ease-out, transform 0.4s ease-out;
+    opacity: 0;
+    transform: translateX(-15px);
+}
+
+.timeline-task.at-risk {
+    background: #ffb74d; /* Orange for risk */
+}
+
+.timeline-task.misaligned {
+    background: #e57373; /* Red for misaligned */
+    text-decoration: line-through;
+}
+
+.timeline-task.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.placeholder {
+    color: #8892b0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    grid-column: 1 / -1;
+}
+
+/* Button */
+.btn {
+    background: #3949ab;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 12px 28px;
+    font-size: 1.2em;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    background: #5c6bc0;
+    transform: translateY(-3px); 
+}
+
+/* Contact Form */
+.contact { text-align: center; }
+#contact-form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+#contact-form input {
+    padding: 12px;
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 8px;
+    border: 1px solid #8892b0;
+    background: #0a192f;
+    color: #ccd6f6;
+    min-width: 250px;
+    transition: border-color 0.3s ease;
+}
+
+#contact-form input:focus {
+    outline: none;
+    border-color: #4fc3f7;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 40px 20px;
+    background: rgba(10, 25, 47, 0.8);
+    color: #8892b0;
+}
+
+.footer-content h3 {
+    color: #ccd6f6;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.footer-content p {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+.footer-content a {
+    color: #4fc3f7;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-content a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.copyright {
+    margin-top: 30px;
+    font-size: 0.9em;
+}
+/* Scroll Animation */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .simulation-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .hero h1 { font-size: 2.5em; }
+    .hero p { font-size: 1em; }
+}
+</style>
+
+<body>
+    <nav>
+        <div class="logo">CogniSync</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cognisync.html">AI Dashboard</a></li>
+            <li><a href="#about-section">About</a></li>
+            <li><a href="#contact-section">Contact Us</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="account.html" class="btn-nav">Sign Up</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero scroll-animate">
+        <div class="container">
+            <h1>Think Smarter. Sync Faster.</h1>
+            <p>
+                Large-scale, multi-team projects often face challenges like misalignment, interdependencies, and unnoticed blockers. Our agent-based solution aims to improve planning, coordination, and execution by enabling intelligent, collaborative agents to manage tasks and communication.
+            </p>
+            <a href="#dashboard" id="get-started-btn" class="btn">Get Started</a>
+        </div>
+    </header>
+
+    <main id="dashboard" class="container">
+        <section id="about-section" class="about scroll-animate">
+            <h2>About CogniSync</h2>
+            <p>CogniSync was born from a simple observation: the world's most ambitious projects are slowed down not by a lack of talent, but by the friction of collaboration. Misaligned priorities, hidden dependencies, and communication gaps create a drag on innovation. Our suite of intelligent agents acts as a digital nervous system for your project, ensuring every team is synchronized, every risk is anticipated, and every goal is met with unparalleled efficiency.</p>
+        </section>
+
+        <section class="agents-intro scroll-animate">
+            <h2>Meet the Agents</h2>
+            <div class="agent-cards-container">
+                <div class="agent-card">
+                    <h3>AlignBot</h3>
+                    <p>Detects misaligned team goals and flags tasks that deviate from core project objectives.</p>
+                </div>
+                <div class="agent-card">
+                    <h3>DepGraph AI</h3>
+                    <p>Maps all task dependencies, creating a clear, visual graph of inter-team reliance.</p>
+                </div>
+                <div class="agent-card">
+                    <h3>RiskSeeker AI</h3>
+                    <p>Proactively scans for potential bottlenecks, resource shortages, and timeline risks.</p>
+                </div>
+                <div class="agent-card">
+                    <h3>TimeShift AI</h3>
+                    <p>Dynamically adjusts project timelines in response to resolved or newly discovered issues.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <p style="font-size: 1.1em; max-width: 700px; margin: 0 auto 25px auto; color: #8892b0; line-height: 1.6;">
+                    These agents work in concert, forming a powerful AI core that provides a holistic, real-time understanding of your project. By automating analysis and communication, CogniSync frees up your teams to focus on what they do best: building great things.
+                </p>
+                <a href="cognisync.html" class="btn">Start Using</a>
+            </div>
+        </section>
+        <section id="contact-section" class="contact scroll-animate">
+            <h2>Join the Mission</h2>
+            <p>Interested in our agent-based solution? Join the beta or leave your feedback.</p>
+            <form id="contact-form">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h3>Help & Support</h3>
+            <p>For any inquiries, please reach out to our team.</p>
+            <p>Email: <a href="mailto:support@cognisync.demo">support@cognisync.demo</a></p>
+            <p>Phone: +1 (555) 123-4567</p>
+            <p>Address: 123 Innovation Drive, Tech City, 12345</p>
+        </div>
+        <p class="copyright">&copy; 2024 CogniSync Demo</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // --- DOM ELEMENTS ---
+    const getStartedBtn = document.getElementById('get-started-btn');
+    const contactForm = document.getElementById('contact-form');
+
+    // --- STICKY NAVIGATION ---
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        // Add a background to the nav when scrolling down
+        if (window.scrollY > 50) {
+            nav.classList.add('nav-scrolled');
+        } else {
+            nav.classList.remove('nav-scrolled');
+        }
+    });
+
+    // --- EVENT LISTENERS ---
+    getStartedBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('#dashboard').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your interest! We will be in touch.');
+        contactForm.reset();
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+});
+</script>
+</body>
+</html>
